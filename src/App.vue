@@ -114,6 +114,10 @@ button:hover{
 	background-color: rgba(196, 196, 196, 0.253);
 }
 
+input:focus{
+  outline: none;
+}
+
 .flashcard{
 	margin: auto;
 	height: 6em;

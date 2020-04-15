@@ -6,7 +6,7 @@
                 v-on:mouseleave="instructions.visibility = 'hidden'"
                 v-on:keyup.enter="check()"
                 v-model="answer"
-                type="text" placeholder="Example: Eb Bb" ref="answer" id="answer">
+                type="text" placeholder="Example: Eb Bb" ref="answer" id="answer" autocomplete="off">
           <button v-on:click="check()">Check answer</button>
           <br><br><span ref="instructions">Seperate notes with space.<br>
           Use "#" to denote sharps<br>
