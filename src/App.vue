@@ -36,6 +36,7 @@ export default {
       count: 0,
       step: 0,
       pickedCard: null,
+      scales: Scales
     }
   },
   methods: {
@@ -62,8 +63,7 @@ export default {
       this.pickedCard = this.pickCard()
       this.startTime = Date.now();
       this.step ++;
-    },
-
+    }  
   },
   created(){    
     bus.$on('keyId', (key) => {
@@ -76,9 +76,17 @@ export default {
       this.step ++;
     }),
     bus.$on('done', () => {
-      this.pickedCard.weight = Math.floor((Date.now() - this.startTime)/1000)*(20*this.mistakes + 1);
+      let time = Math.floor((Date.now() - this.startTime)/1000);
+      this.pickedCard.weight = time*(20*this.mistakes + 1);
       if(this.pickedCard.weight >= 10000)
         this.pickedCard.weight = 9999;
+      for(let scale in Scales){
+        if(Scales[scale].weight){
+          if(Scales[scale].name === this.pickedCard.name)
+            continue;
+          Scales[scale].weight = Scales[scale].weight + time;
+        }
+      }
       this.pickedCard = null
       this.mistakes = 0;
       this.step ++;
