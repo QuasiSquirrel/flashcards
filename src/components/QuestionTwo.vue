@@ -1,12 +1,17 @@
 <template>
-  <div>
+    <div>
         <h2>Good work!</h2>
 		<p>Last question. The key of the major scale just played?</p><br>
-			<p><input type="text" v-model="answer" placeholder="Example: C" id="answer" ref="answer"><button ref="check" @click="check()">Check answer</button>
-				<br><br><span>Use "#" to denote sharps<br>
-                and "b" to denote flats.<br>
-                Example: B flat would be "Bb".</span>
-			</p><br>
+		<p><input v-on:mouseenter="appear($event)"
+                v-on:mouseleave="instructions.visibility = 'hidden'"
+                v-on:keyup.enter="check()"
+                v-model="answer"
+                type="text" placeholder="Example: C" ref="answer" id="answer">
+            <button v-on:click="check()">Check answer</button>
+			<br><br><span ref="instructions">Use "#" to denote sharps<br>
+            and "b" to denote flats.<br>
+            Example: B flat would be "Bb".</span>
+		</p>
     </div>
 </template>
 
@@ -21,7 +26,8 @@ export default {
     },
     data(){
         return{
-            answer: ''
+            answer: '',
+            instructions: null
         }
     },
     methods: {
@@ -34,9 +40,15 @@ export default {
             }
             else
                 bus.$emit('done')
+        },
+        appear(event){
+            this.instructions.visibility = "visible";
+            this.instructions.left = event.layerX + "px"
         }
+
     },
     mounted(){
+        this.instructions = this.$refs.instructions.style
         this.$refs.answer.addEventListener('transitionend', () => {
             this.$refs.answer.className = '';
     })

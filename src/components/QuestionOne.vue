@@ -2,13 +2,18 @@
   <div>
       <h2>Nice one!</h2> 
       <p>Now, what were the sharps or flats played?</p><br>
-      <p><input type="text" placeholder="Example: Eb Bb" ref="answer" id="answer" v-model="answer"><button ref="check" v-on:click="check()">Check answer</button>
-          <br><br><span>Seperate notes with space.<br>
+      <p><input v-on:mouseenter="appear($event)"
+                v-on:mouseleave="instructions.visibility = 'hidden'"
+                v-on:keyup.enter="check()"
+                v-model="answer"
+                type="text" placeholder="Example: Eb Bb" ref="answer" id="answer">
+          <button v-on:click="check()">Check answer</button>
+          <br><br><span ref="instructions">Seperate notes with space.<br>
           Use "#" to denote sharps<br>
           and "b" to denote flats.<br>
           Example: B flat would be "Bb".<br>
           Leave empty if none.</span>
-      </p><br>
+      </p>
   </div>
 </template>
 
@@ -23,7 +28,8 @@ export default {
   },
   data(){
     return{
-      answer: ''
+      answer: '',
+      instructions: null
     }
   },
   methods: {
@@ -44,9 +50,14 @@ export default {
         }
       }
      bus.$emit('nextStep');
+    },
+    appear(event){
+      this.instructions.visibility = "visible";
+      this.instructions.left = event.layerX + "px"
     }
   },
   mounted(){
+    this.instructions = this.$refs.instructions.style
     this.$refs.answer.addEventListener('transitionend', () => {
       this.$refs.answer.className = '';
     })
