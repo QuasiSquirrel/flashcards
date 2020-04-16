@@ -78,7 +78,7 @@ export default {
     }),
     bus.$on('done', () => {
       let time = Math.floor((Date.now() - this.startTime)/1000);
-      this.pickedCard.weight = time*(20*this.mistakes + 1);
+      this.pickedCard.weight = time*(10*this.mistakes + 1);
       if(this.pickedCard.weight >= 10000)
         this.pickedCard.weight = 9999;
       for(let scale in Scales){

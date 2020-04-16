@@ -6,10 +6,10 @@
                 v-on:mouseleave="instructions.visibility = 'hidden'"
                 v-on:keyup.enter="check()"
                 v-model="answer"
-                type="text" placeholder="Example: Eb Bb" ref="answer" id="answer" autocomplete="off">
+                type="text" placeholder="Example: Eb Bb" ref="answer" id="answer" autocomplete="off" autofocus>
           <button v-on:click="check()">Check answer</button>
           <br><br><span ref="instructions">Seperate notes with space.<br>
-          Use "#" to denote sharps<br>
+          Use "s" to denote sharps<br>
           and "b" to denote flats.<br>
           Example: B flat would be "Bb".<br>
           Leave empty if none.</span>
@@ -42,7 +42,7 @@ export default {
       }
       else{
         for(let i of input){
-          if(this.pickedCard.answer.indexOf(i) === -1){
+          if(input.slice(input.indexOf(i) + 1).indexOf(i) >= 0 || this.pickedCard.answer.indexOf(i) === -1){
             this.$refs.answer.className = "animate";
             bus.$emit('mistake')
             return;

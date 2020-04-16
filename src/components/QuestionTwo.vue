@@ -6,9 +6,9 @@
                 v-on:mouseleave="instructions.visibility = 'hidden'"
                 v-on:keyup.enter="check()"
                 v-model="answer"
-                type="text" placeholder="Example: C" ref="answer" id="answer" autocomplete="off">
+                type="text" placeholder="Example: C" ref="answer" id="answer" autocomplete="off" autofocus>
             <button v-on:click="check()">Check answer</button>
-			<br><br><span ref="instructions">Use "#" to denote sharps<br>
+			<br><br><span ref="instructions">Use "s" to denote sharps<br>
             and "b" to denote flats.<br>
             Example: B flat would be "Bb".</span>
 		</p>

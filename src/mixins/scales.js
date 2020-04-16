@@ -45,38 +45,38 @@ export default {
                     weight: 10000
                 },
                 fs: {
-                    notes: ['fs', 'gs', 'as', 'b', 'cs', 'ds', 'es', 'fs'],
-                    answer: ['F#', 'G#', 'A#', 'C#', 'D#', 'E#',],
+                    notes: ['fs', 'gs', 'as', 'b', 'cs', 'ds', 'f', 'fs'],
+                    answer: ['FS', 'GS', 'AS', 'CS', 'DS', 'ES',],
                     name: 'Fs_scale',
                     weight: 10000
                 },
                 b: {
                     notes: ['b', 'cs', 'ds', 'e', 'fs', 'gs', 'as', 'b'],
-                    answer: ['C#', 'D#', 'F#', 'G#', 'A#'],
+                    answer: ['CS', 'DS', 'FS', 'GS', 'AS'],
                     name: 'B_scale',
                     weight: 10000
                 },
                 e: {
                     notes: ['e', 'fs', 'gs', 'a', 'b', 'cs', 'ds', 'e'],
-                    answer: ['F#', 'G#', 'C#', 'D#'],
+                    answer: ['FS', 'GS', 'CS', 'DS'],
                     name: 'E_scale',
                     weight: 10000
                 },
                 a: {
                     notes: ['a', 'b', 'cs', 'd', 'e', 'fs', 'gs', 'a'],
-                    answer: ['C#', 'F#', 'G#'],
+                    answer: ['CS', 'FS', 'GS'],
                     name: 'A_scale',
                     weight: 10000
                 },
                 d: {
                     notes: ['d', 'e', 'fs', 'g', 'a', 'b', 'cs', 'd'],
-                    answer: ['F#', 'C#'],
+                    answer: ['FS', 'CS'],
                     name: 'D_scale',
                     weight: 10000
                 },
                 g: {
                     notes: ['g', 'a', 'b', 'c', 'd', 'e', 'fs', 'g'],
-                    answer: ['F#'],
+                    answer: ['FS'],
                     name: 'G_scale',
                     weight: 10000
                 }
