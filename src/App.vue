@@ -36,7 +36,8 @@ export default {
       count: 0,
       step: 0,
       pickedCard: null,
-      scales: Scales
+      scales: Scales,
+      weights: {},
     }
   },
   methods: {
@@ -82,16 +83,34 @@ export default {
         this.pickedCard.weight = 9999;
       for(let scale in Scales){
         if(Scales[scale].weight){
-          if(Scales[scale].name === this.pickedCard.name)
+          if(Scales[scale].name === this.pickedCard.name){
+            this.weights[scale] = this.pickedCard.weight
             continue;
+          } 
           Scales[scale].weight = Scales[scale].weight + time;
+          this.weights[scale] = Scales[scale].weight
         }
       }
+      this.$ls.set('weights', JSON.stringify(this.weights))
       this.pickedCard = null
       this.mistakes = 0;
       this.step ++;
     })
   },
+  mounted(){
+    if(this.$ls.get('weights')){
+      try{
+        this.weights = JSON.parse(this.$ls.get('weights'));
+        for(let scale in Scales){
+          Scales[scale].weight = this.weights[scale]
+        }
+      }
+      catch(e){
+        console.log(e);
+        this.$ls.remove('weights');
+      }
+    }
+  }
 }
 </script>
 
