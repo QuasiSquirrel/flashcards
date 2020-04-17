@@ -1,16 +1,16 @@
 <template>
   <div id="app">
       <button v-on:click="generate" v-show="step === 0 || step === 4">Generate</button>
-      <div v-if="step === 1" class="flashcard">
-          <h2>Play major scale of this key<img v-bind:src="'images/' + pickedCard.name + '.png'"></h2>
+      <one class="flashcard" v-bind:pickedCard="pickedCard" v-if="step === 1"/>
+      <two class="flashcard" v-bind:pickedCard="pickedCard" v-if="step === 2"/>
+      <div v-if="step === 3" class="flashcard">
+          <h2>Play major scale of the key!</h2>
       </div>
-      <one class="flashcard" v-bind:pickedCard="pickedCard" v-if="step === 2"/>
-      <two class="flashcard" v-bind:pickedCard="pickedCard" v-if="step === 3"/>
       <div class="flashcard" v-if="step === 4">
           <h2>Great job!</h2>
           <p>Click the button for another scale!</p>
       </div>
-      <keyboard v-bind:pickedCard="pickedCard" v-show="step < 2"/>
+      <keyboard v-bind:pickedCard="pickedCard" v-show="step === 3 || step === 0"/>
   </div>
 </template>
 
@@ -54,7 +54,7 @@ export default {
       }
       if(this.count === this.pickedCard.notes.length){
         window.setTimeout(()=>{
-          this.step ++;
+          this.done();
           this.count = 0;
           }, 300);
       }
@@ -64,19 +64,8 @@ export default {
       this.pickedCard = this.pickCard()
       this.startTime = Date.now();
       this.step ++;
-    }  
-  },
-  created(){    
-    bus.$on('keyId', (key) => {
-      this.rightKey(event, key)
-    }),
-    bus.$on('mistake', () => {
-      this.mistakes ++;
-    }),
-    bus.$on('nextStep', () => {
-      this.step ++;
-    }),
-    bus.$on('done', () => {
+    },
+    done(){
       let time = Math.floor((Date.now() - this.startTime)/1000);
       this.pickedCard.weight = time*(10*this.mistakes + 1);
       if(this.pickedCard.weight >= 10000)
@@ -94,6 +83,17 @@ export default {
       this.$ls.set('weights', JSON.stringify(this.weights))
       this.pickedCard = null
       this.mistakes = 0;
+      this.step ++;
+    }  
+  },
+  created(){    
+    bus.$on('keyId', (key) => {
+      this.rightKey(event, key)
+    }),
+    bus.$on('mistake', () => {
+      this.mistakes ++;
+    }),
+    bus.$on('nextStep', () => {
       this.step ++;
     })
   },
@@ -129,7 +129,6 @@ export default {
 }
 
 button{
-  margin: 0 20px;
 	font-size: 1em;
 	border: 1px solid black;
 	padding: 10px 20px;
@@ -139,6 +138,10 @@ button{
 
 button:hover{
 	background-color: rgba(196, 196, 196, 0.253);
+}
+
+input{  
+  margin-right: 20px;
 }
 
 input:focus{
@@ -153,7 +156,8 @@ input:focus{
 
 .flashcard span{  
 	background-color: rgba(70, 76, 106, 0.5);
-	font-size: 0.85em;
+  font-size: 1em;
+  line-height: 1.3em;
 	visibility: hidden;
 	position: absolute;
 	padding: 1px 3px;
@@ -162,9 +166,6 @@ input:focus{
 
 .flashcard h2{
 	margin-top: 5%;
-	display: flex;
-	align-items: center;
-	justify-content: center;
 	font-size: 1.8em;
 }
 
@@ -177,7 +178,13 @@ input:focus{
 .flashcard p{
 	line-height: 1.3em;
 	font-size: 1em;
-	position: relative;
+  display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.input{
+  position: relative;
 }
 
 #answer{
